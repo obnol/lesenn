@@ -1,6 +1,16 @@
 import { AddBookButton } from "@/components/add-book-button";
 import { getUserLibrary } from "@/lib/supabase/queries/cached-queries";
 
+type Params = Promise<{ username: string }>;
+
+export async function generateMetadata({ params }: { params: Params }) {
+  const { username } = await params;
+
+  return {
+    title: `${username}'s library`,
+  };
+}
+
 export default async function Page() {
   const books = await getUserLibrary();
 
