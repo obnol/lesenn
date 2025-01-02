@@ -1,6 +1,5 @@
 import { OTPSignIn } from "@/components/otp-sign-in";
 import { Metadata } from "next";
-import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "login",
@@ -19,18 +18,6 @@ export default function Page() {
           <div className="py-4">
             <OTPSignIn />
           </div>
-
-          <p className="text-xs text-muted-foreground">
-            by clicking continue, you acknowledge that you have read and agree to lesenn&apos;s{" "}
-            <Link href="/terms" className="underline">
-              terms of service
-            </Link>{" "}
-            and{" "}
-            <Link href="/policy" className="underline">
-              privacy policy
-            </Link>
-            .
-          </p>
         </div>
       </div>
     </div>

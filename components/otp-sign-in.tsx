@@ -87,7 +87,9 @@ export function OTPSignIn() {
             )}
           />
 
-          <Button type="submit">{isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <span>continue</span>}</Button>
+          <Button type="submit" disabled={isLoading}>
+            {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <span>continue</span>}
+          </Button>
         </div>
       </form>
     </Form>

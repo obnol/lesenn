@@ -1,14 +1,28 @@
-"use client";
+import { AddBookButton } from "@/components/add-book-button";
+import { getUserLibrary } from "@/lib/supabase/queries/cached-queries";
 
-import { LogOut } from "@/components/log-out";
+export default async function Page() {
+  const books = await getUserLibrary();
 
-export default function Page() {
   return (
-    <div>
-      <div className="flex justify-between">
-        <p className="">library</p>
-        <LogOut />
+    <div className="flex flex-col gap-8">
+      <div className="flex justify-between items-center">
+        <p className="font-bold text-xl">library</p>
+        <AddBookButton />
       </div>
+
+      {books?.data?.length ? (
+        <div className="flex flex-col gap-8">
+          {books.data.map((book) => (
+            <div key={book.id}>
+              <p className="font-semibold">{book.title}</p>
+              <p className="text-sm text-muted-foreground">{book.authors}</p>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div>no books</div>
+      )}
     </div>
   );
 }

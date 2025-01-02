@@ -18,3 +18,10 @@ export const onboardingSchema = z.object({
 });
 
 export type OnboardingSchemaFormValues = z.infer<typeof onboardingSchema>;
+
+export const addBookSchema = z.object({
+  title: z.string(),
+  isReading: z.boolean().optional(),
+});
+
+export type AddBookSchemaFormValues = z.infer<typeof addBookSchema>;
