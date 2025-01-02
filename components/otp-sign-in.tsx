@@ -36,13 +36,13 @@ export function OTPSignIn() {
     const { error } = await supabase.auth.signInWithOtp({ email });
 
     if (error) {
-      toast.error("Failed to send OTP");
+      toast.error("failed to send otp");
       setLoading(false);
     } else {
       setSent(true);
       setLoading(false);
 
-      toast.success("Check your email for the OTP");
+      toast.success("check your email for the otp");
     }
   }
 

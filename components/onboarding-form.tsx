@@ -14,7 +14,7 @@ import { onboardingAction } from "@/actions/onboarding.action";
 export function OnboardingForm() {
   const onboardingUser = useAction(onboardingAction, {
     onError: () => {
-      toast.error("Something went wrong please try again.");
+      toast.error("something went wrong please try again");
     },
   });
 
