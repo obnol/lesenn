@@ -16,8 +16,6 @@ export const addBookAction = authActionClient
     );
     const data = await response.json();
 
-    console.log(JSON.stringify(data, null, 2));
-
     if (!data.items) {
       throw new Error("No book found");
     }
