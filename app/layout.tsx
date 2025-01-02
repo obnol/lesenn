@@ -12,14 +12,14 @@ export const metadata: Metadata = {
   description: "minimal book tracking",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${geistMono.className} antialiased`}>{children}</body>
+      <body className={`${geistMono.className} antialiased`}>
+        <div className="flex flex-col min-h-screen p-8 md:pt-16">
+          <main className="max-w-2xl mx-auto w-full space-y-8">{children}</main>
+        </div>
+      </body>
     </html>
   );
 }
