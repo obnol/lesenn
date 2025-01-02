@@ -54,6 +54,13 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
+  // Redirect logged-in users trying to access other users' page
+  if (user && isDynamicUserRoute && user.user_metadata?.username !== pathname.split("/")[1]) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/${user.user_metadata?.username}`;
+    return NextResponse.redirect(url);
+  }
+
   // Allow access to all other cases
   return supabaseResponse;
 }
