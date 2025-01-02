@@ -5,6 +5,14 @@ import { authActionClient } from "./safe-action";
 import { addBookSchema } from "./schema";
 import { revalidateTag } from "next/cache";
 
+type GoogleBook = {
+  volumeInfo: {
+    title: string;
+    authors: string[];
+    pageCount: number;
+  };
+};
+
 export const addBookAction = authActionClient
   .schema(addBookSchema)
   .metadata({ name: "add-book" })
@@ -20,12 +28,12 @@ export const addBookAction = authActionClient
       throw new Error("No book found");
     }
 
-    const book = data.items[0];
+    const book = data.items[0] as GoogleBook;
 
     await addBook(supabase, {
-      title: book.volumeInfo.title,
+      title: book.volumeInfo.title.toLowerCase(),
       isReading: parsedInput.isReading,
-      authors: book.volumeInfo.authors,
+      authors: book.volumeInfo.authors.map((author) => author.toLowerCase()),
       userId: user.id,
       pageCount: book.volumeInfo.pageCount,
     });
