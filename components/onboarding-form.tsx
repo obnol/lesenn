@@ -13,8 +13,11 @@ import { onboardingAction } from "@/actions/onboarding.action";
 
 export function OnboardingForm() {
   const onboardingUser = useAction(onboardingAction, {
-    onError: () => {
-      toast.error("something went wrong please try again");
+    onError: ({ error }) => {
+      if (error.serverError === "username already taken") {
+        form.setError("username", { message: "username already taken" });
+        return;
+      } else toast.error("something went wrong please try again");
     },
   });
 
