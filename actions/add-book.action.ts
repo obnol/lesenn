@@ -25,7 +25,7 @@ export const addBookAction = authActionClient
     const data = await response.json();
 
     if (!data.items) {
-      throw new Error("No book found");
+      throw new Error("no book found");
     }
 
     const book = data.items[0] as GoogleBook;

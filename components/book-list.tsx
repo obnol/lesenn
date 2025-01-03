@@ -13,6 +13,6 @@ export function BookList({ books }: Props) {
       ))}
     </div>
   ) : (
-    <div>no books</div>
+    <div className="flex justify-center pt-24">no books</div>
   );
 }
