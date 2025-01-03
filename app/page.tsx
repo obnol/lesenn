@@ -13,10 +13,11 @@ export default function Page() {
       <main className="flex flex-col items-center text-center gap-6 pt-36 sm:pt-48">
         <h1 className="text-2xl sm:text-4xl font-extrabold leading-tight">read. track. repeat.</h1>
 
-        <p className="text-lg text-gray-600 max-w-md">
-          discover a better way to manage your reading. keep track of your progress, revisit your favorites. <br />
-          built for personal use with a simple and clean interface.
-        </p>
+        <div className="text-lg text-gray-600 max-w-lg flex flex-col space-y-2">
+          <h2>discover a better way to manage your reading.</h2>
+          <h2>keep track of your progress, revisit your favorites.</h2>
+          <h2>built for personal use with a simple and clean interface.</h2>
+        </div>
 
         <Link href="/login" className="mt-4 px-6 py-3 bg-blue-500 text-white font-medium hover:bg-blue-600 transition">
           get started
