@@ -31,7 +31,7 @@ export const addBookAction = authActionClient
     const book = data.items[0] as GoogleBook;
 
     await addBook(supabase, {
-      title: book.volumeInfo.title.toLowerCase(),
+      title: parsedInput.title,
       isReading: parsedInput.isReading,
       authors: book.volumeInfo.authors.map((author) => author.toLowerCase()),
       userId: user.id,
