@@ -34,3 +34,9 @@ export const editBookSchema = z.object({
 });
 
 export type EditBookSchemaFormValues = z.infer<typeof editBookSchema>;
+
+export const deleteBookSchema = z.object({
+  bookId: z.string(),
+});
+
+export type DeleteBookSchemaFormValues = z.infer<typeof deleteBookSchema>;

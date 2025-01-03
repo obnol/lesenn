@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import { Loader } from "lucide-react";
 import { editBookAction } from "@/actions/edit-book.action";
 import { Book } from "@/lib/supabase/queries";
+import { DeleteBookButton } from "./delete-book-button";
 
 type Props = {
   className?: string;
@@ -43,58 +44,78 @@ export function EditBookForm({ className, onSuccess, book }: Props) {
   });
 
   function onSubmit(data: EditBookSchemaFormValues) {
-    editBook.execute({
-      ...data,
-      progress: data.isFinished ? book.page_count : data.progress,
-      isReading: data.isFinished ? false : data.isReading,
-    });
+    if (book.is_finished) {
+      editBook.execute({
+        progress: 0,
+        isReading: true,
+        isFinished: false,
+        bookId: book.id,
+      });
+    } else {
+      editBook.execute({
+        ...data,
+        progress: data.isFinished ? book.page_count : data.progress,
+        isReading: data.isFinished ? false : data.isReading,
+      });
+    }
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className={cn("flex flex-col gap-4", className)}>
-        <FormField
-          control={form.control}
-          name="progress"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>progress</FormLabel>
-              <FormControl>
-                <Input type="number" {...field} onChange={(e) => field.onChange(parseFloat(e.target.value))} />
-              </FormControl>
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="isReading"
-          render={({ field }) => (
-            <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-              <FormControl>
-                <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-              </FormControl>
-              <FormLabel>currently reading</FormLabel>
-            </FormItem>
-          )}
-        />
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        {book.is_finished ? (
+          <Button type="submit" className="w-full" disabled={editBook.status === "executing"}>
+            {editBook.status === "executing" ? <Loader className="h-4 w-4 animate-spin" /> : <span>re-read</span>}
+          </Button>
+        ) : (
+          <div className={cn("flex flex-col gap-4", className)}>
+            <FormField
+              control={form.control}
+              name="progress"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>page</FormLabel>
+                  <FormControl>
+                    <Input type="number" {...field} onChange={(e) => field.onChange(parseFloat(e.target.value))} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="isReading"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                  <FormControl>
+                    <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                  </FormControl>
+                  <FormLabel>currently reading</FormLabel>
+                </FormItem>
+              )}
+            />
 
-        <FormField
-          control={form.control}
-          name="isFinished"
-          render={({ field }) => (
-            <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-              <FormControl>
-                <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-              </FormControl>
-              <FormLabel>mark as finished</FormLabel>
-            </FormItem>
-          )}
-        />
+            <FormField
+              control={form.control}
+              name="isFinished"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                  <FormControl>
+                    <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                  </FormControl>
+                  <FormLabel>mark as finished</FormLabel>
+                </FormItem>
+              )}
+            />
 
-        <Button type="submit" className="w-full" disabled={editBook.status === "executing"}>
-          {editBook.status === "executing" ? <Loader className="h-4 w-4 animate-spin" /> : <span>save</span>}
-        </Button>
+            <Button type="submit" className="w-full" disabled={editBook.status === "executing"}>
+              {editBook.status === "executing" ? <Loader className="h-4 w-4 animate-spin" /> : <span>save</span>}
+            </Button>
+          </div>
+        )}
       </form>
+      <div className="flex justify-center">
+        <DeleteBookButton bookId={book.id} onSuccess={onSuccess} />
+      </div>
     </Form>
   );
 }

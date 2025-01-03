@@ -1,4 +1,9 @@
-import { AddBookSchemaFormValues, EditBookSchemaFormValues, OnboardingSchemaFormValues } from "@/actions/schema";
+import {
+  AddBookSchemaFormValues,
+  DeleteBookSchemaFormValues,
+  EditBookSchemaFormValues,
+  OnboardingSchemaFormValues,
+} from "@/actions/schema";
 import { Client } from "../types";
 
 export async function updateUser(supabase: Client, data: OnboardingSchemaFormValues) {
@@ -39,4 +44,8 @@ export async function editBook(supabase: Client, data: EditBookParams) {
     .update({ is_reading: data.isReading, is_finished: data.isFinished, progress: data.progress })
     .eq("id", data.bookId)
     .eq("user_id", data.userId);
+}
+
+export async function deleteBook(supabase: Client, data: DeleteBookSchemaFormValues) {
+  await supabase.from("books").delete().eq("id", data.bookId);
 }
