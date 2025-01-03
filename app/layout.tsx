@@ -10,7 +10,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "lesenn",
+    default: "lesenn | minimal book tracking",
     template: "%s | lesenn",
   },
   description: "minimal book tracking",
