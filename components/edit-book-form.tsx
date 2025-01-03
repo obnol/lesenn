@@ -76,7 +76,7 @@ export function EditBookForm({ className, onSuccess, book }: Props) {
                 <FormItem>
                   <FormLabel>page</FormLabel>
                   <FormControl>
-                    <Input type="number" {...field} onChange={(e) => field.onChange(parseFloat(e.target.value))} />
+                    <Input type="number" {...field} onChange={(e) => field.onChange(parseFloat(e.target.value))} max={book.page_count} />
                   </FormControl>
                 </FormItem>
               )}
