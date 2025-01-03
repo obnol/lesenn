@@ -9,7 +9,7 @@ import { Form, FormControl, FormField, FormItem } from "./ui/form";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "./ui/input-otp";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { Loader2 } from "lucide-react";
+import { Loader } from "lucide-react";
 import { toast } from "sonner";
 import { otpSignInSchema, OtpSignInSchemaFormValues } from "@/actions/schema";
 import { verifyOtpAction } from "@/actions/verify-otp.action";
@@ -88,7 +88,7 @@ export function OTPSignIn() {
           />
 
           <Button type="submit" disabled={isLoading}>
-            {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <span>continue</span>}
+            {isLoading ? <Loader className="h-4 w-4 animate-spin" /> : <span>continue</span>}
           </Button>
         </div>
       </form>

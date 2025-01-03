@@ -39,7 +39,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <div className="flex flex-col min-h-screen p-8 md:pt-16">
           <main className="max-w-2xl mx-auto w-full space-y-8">{children}</main>
         </div>
-        <Toaster richColors />
+        <Toaster />
       </body>
     </html>
   );

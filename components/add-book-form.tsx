@@ -11,7 +11,7 @@ import { Input } from "./ui/input";
 import { Checkbox } from "./ui/checkbox";
 import { Button } from "./ui/button";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { Loader } from "lucide-react";
 
 type Props = {
   className?: string;
@@ -70,7 +70,7 @@ export function AddBookForm({ className, onSuccess }: Props) {
         />
 
         <Button type="submit" className="w-full" disabled={addBook.status === "executing"}>
-          {addBook.status === "executing" ? <Loader2 className="h-4 w-4 animate-spin" /> : <span>submit</span>}
+          {addBook.status === "executing" ? <Loader className="h-4 w-4 animate-spin" /> : <span>save</span>}
         </Button>
       </form>
     </Form>

@@ -5,6 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { useMediaQuery } from "@/lib/hooks/use-media-query";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "./ui/drawer";
 import { AddBookForm } from "./add-book-form";
+import { Button } from "./ui/button";
 
 export function AddBookButton() {
   const [open, setOpen] = useState(false);
@@ -18,7 +19,7 @@ export function AddBookButton() {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <button className="text-blue-500 cursor-default">add book</button>
+          <Button>add book</Button>
         </DialogTrigger>
         <DialogContent className="max-w-[455px]">
           <DialogHeader>
@@ -33,7 +34,7 @@ export function AddBookButton() {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <button className="text-blue-500">add book</button>
+        <Button>add book</Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
