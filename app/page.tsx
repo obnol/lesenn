@@ -27,9 +27,15 @@ export default function Page() {
       <footer className="absolute bottom-8 text-xs text-gray-500">
         <div className="flex flex-col items-center gap-2">
           © {new Date().getFullYear()} lesenn. all rights reserved.
-          <a href="https://x.com/obnol1" target="_blank" className="text-blue-500">
-            reach out to me on x
-          </a>
+          <div className="flex flex-col sm:flex-row items-center gap-2 text-blue-500">
+            <a href="https://x.com/obnol1" target="_blank">
+              reach out to me on x
+            </a>
+            <span className="hidden sm:block">|</span>
+            <a href="https://github.com/obnol/lesenn" target="_blank">
+              view the source code
+            </a>
+          </div>
         </div>
       </footer>
     </div>
