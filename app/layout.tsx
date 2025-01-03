@@ -14,6 +14,18 @@ export const metadata: Metadata = {
     template: "%s | lesenn",
   },
   description: "minimal book tracking",
+  keywords: ["book", "tracking", "minimal", "lesen"],
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://www.lesenn.com",
+    title: "lesenn",
+    description: "minimal book tracking",
+  },
+  twitter: {
+    title: "lesenn",
+    description: "minimal book tracking",
+  },
 };
 
 export const viewport = {
