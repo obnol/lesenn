@@ -15,7 +15,15 @@ import { otpSignInSchema, OtpSignInSchemaFormValues } from "@/actions/schema";
 import { verifyOtpAction } from "@/actions/verify-otp.action";
 
 export function OTPSignIn() {
-  const verifyOtp = useAction(verifyOtpAction);
+  const verifyOtp = useAction(verifyOtpAction, {
+    onError: ({ error }) => {
+      if (error.serverError === "Token has expired or is invalid") {
+        toast.error("invalid otp");
+      } else {
+        toast.error("failed to verify otp");
+      }
+    },
+  });
   const [isLoading, setLoading] = useState(false);
   const [isSent, setSent] = useState(false);
   const [email, setEmail] = useState("");

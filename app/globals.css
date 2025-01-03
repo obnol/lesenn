@@ -63,6 +63,10 @@ body {
   }
 }
 
+button {
+  cursor: default;
+}
+
 @layer base {
   * {
     @apply border-border;

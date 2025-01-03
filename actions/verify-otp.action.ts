@@ -8,7 +8,13 @@ import { redirect } from "next/navigation";
 export const verifyOtpAction = actionClient.schema(verifyOtpSchema).action(async ({ parsedInput: { token, email } }) => {
   const supabase = await createClient();
 
-  await supabase.auth.verifyOtp({ email, token, type: "email" });
+  const { data, error } = await supabase.auth.verifyOtp({ email, token, type: "email" });
 
-  redirect("/");
+  if (error) {
+    throw error;
+  }
+
+  if (data) {
+    redirect("/");
+  }
 });

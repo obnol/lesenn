@@ -18,7 +18,7 @@ export function AddBookButton() {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <button className="text-blue-500 cursor-default">add book</button>
+          <button className="text-blue-500">add book</button>
         </DialogTrigger>
         <DialogContent className="max-w-[455px]">
           <DialogHeader>
@@ -33,7 +33,7 @@ export function AddBookButton() {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <button className="text-blue-500 cursor-default">add book</button>
+        <button className="text-blue-500">add book</button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
