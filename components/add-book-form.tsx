@@ -23,7 +23,11 @@ export function AddBookForm({ className, onSuccess }: Props) {
     onError: () => {
       toast.error("something went wrong please try again");
     },
-    onSuccess,
+    onSuccess: () => {
+      onSuccess();
+      toast.success("book added successfully");
+      form.reset();
+    },
   });
 
   const form = useForm<AddBookSchemaFormValues>({

@@ -1,4 +1,5 @@
 import { AddBookButton } from "@/components/add-book-button";
+import { BookList } from "@/components/book-list";
 import { getUserLibrary } from "@/lib/supabase/queries/cached-queries";
 
 type Params = Promise<{ username: string }>;
@@ -17,22 +18,11 @@ export default async function Page() {
   return (
     <div className="flex flex-col gap-8">
       <div className="flex justify-between items-center">
-        <p className="font-bold text-xl">library</p>
+        <p className="font-bold text-2xl">library</p>
         <AddBookButton />
       </div>
 
-      {books?.data?.length ? (
-        <div className="flex flex-col gap-8">
-          {books.data.map((book) => (
-            <div key={book.id}>
-              <p className="font-semibold">{book.title}</p>
-              <p className="text-sm text-muted-foreground">{book.authors}</p>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div>no books</div>
-      )}
+      <BookList books={books?.data} />
     </div>
   );
 }

@@ -13,5 +13,11 @@ export type Book = Tables<"books">;
  * Get user's library
  */
 export async function getUserLibraryQuery(supabase: Client, userId: string) {
-  return supabase.from("books").select("*").eq("user_id", userId).order("created_at", { ascending: false });
+  return supabase
+    .from("books")
+    .select("*")
+    .eq("user_id", userId)
+    .order("is_reading", { ascending: false })
+    .order("created_at", { ascending: false })
+    .order("is_finished", { ascending: false });
 }

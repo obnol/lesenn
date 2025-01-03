@@ -25,3 +25,12 @@ export const addBookSchema = z.object({
 });
 
 export type AddBookSchemaFormValues = z.infer<typeof addBookSchema>;
+
+export const editBookSchema = z.object({
+  bookId: z.string(),
+  isReading: z.boolean().optional(),
+  isFinished: z.boolean().optional(),
+  progress: z.number().optional(),
+});
+
+export type EditBookSchemaFormValues = z.infer<typeof editBookSchema>;
