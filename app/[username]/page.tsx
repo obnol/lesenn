@@ -1,5 +1,6 @@
 import { AddBookButton } from "@/components/add-book-button";
 import { BookList } from "@/components/book-list";
+import { Header } from "@/components/header";
 import { getUserLibrary } from "@/lib/supabase/queries/cached-queries";
 
 type Params = Promise<{ username: string }>;
@@ -17,8 +18,8 @@ export default async function Page() {
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="flex justify-between items-center">
-        <p className="font-bold text-2xl">library</p>
+      <Header />
+      <div className="flex justify-end">
         <AddBookButton />
       </div>
 

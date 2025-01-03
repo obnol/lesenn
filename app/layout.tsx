@@ -36,7 +36,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           `}
       </Script>
       <body className={`${geistMono.className} antialiased`}>
-        <div className="flex flex-col min-h-screen p-6 md:pt-16">
+        <div className="flex flex-col min-h-screen p-6 md:pt-12">
           <main className="max-w-2xl mx-auto w-full space-y-8">{children}</main>
         </div>
         <Toaster />

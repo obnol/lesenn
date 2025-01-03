@@ -3,5 +3,9 @@
 import { logOutAction } from "@/actions/log-out.action";
 
 export function LogOut() {
-  return <button onClick={logOutAction}>log out</button>;
+  return (
+    <button className="cursor-default" onClick={logOutAction}>
+      log out
+    </button>
+  );
 }
