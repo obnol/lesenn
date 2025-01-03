@@ -14,9 +14,9 @@ export default function Page() {
         <h1 className="text-2xl sm:text-4xl font-extrabold leading-tight">read. track. repeat.</h1>
 
         <div className="text-lg text-gray-600 max-w-lg flex flex-col space-y-2">
-          <h2>discover a better way to manage your reading.</h2>
-          <h2>keep track of your progress, revisit your favorites.</h2>
-          <h2>built for personal use with a simple and clean interface.</h2>
+          <p>discover a better way to manage your reading.</p>
+          <p>keep track of your progress, revisit your favorites.</p>
+          <p>built for personal use with a simple and clean interface.</p>
         </div>
 
         <Link href="/login" className="mt-4 px-6 py-3 bg-blue-500 text-white font-medium hover:bg-blue-600 transition">
