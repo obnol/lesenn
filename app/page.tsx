@@ -10,8 +10,8 @@ export default function Page() {
         </Link>
       </header>
 
-      <main className="flex flex-col items-center text-center gap-6 pt-48">
-        <h1 className="text-3xl sm:text-4xl font-extrabold leading-tight">read. track. repeat.</h1>
+      <main className="flex flex-col items-center text-center gap-6 pt-36 sm:pt-48">
+        <h1 className="text-2xl sm:text-4xl font-extrabold leading-tight">read. track. repeat.</h1>
 
         <p className="text-lg text-gray-600 max-w-md">
           discover a better way to manage your reading. keep track of your progress, revisit your favorites. <br />

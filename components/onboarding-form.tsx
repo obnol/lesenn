@@ -25,8 +25,6 @@ export function OnboardingForm() {
     },
   });
 
-  const isSubmitting = onboardingUser.status !== "idle" && onboardingUser.status !== "hasErrored";
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onboardingUser.execute)} className="space-y-8">
@@ -44,8 +42,8 @@ export function OnboardingForm() {
           )}
         />
 
-        <Button type="submit" className="w-full" disabled={isSubmitting}>
-          {isSubmitting ? <Loader className="h-4 w-4 animate-spin" /> : <span>continue</span>}
+        <Button type="submit" className="w-full" disabled={onboardingUser.status === "executing"}>
+          {onboardingUser.status === "executing" ? <Loader className="h-4 w-4 animate-spin" /> : <span>continue</span>}
         </Button>
       </form>
     </Form>
