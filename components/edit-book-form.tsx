@@ -55,7 +55,7 @@ export function EditBookForm({ className, onSuccess, book }: Props) {
       editBook.execute({
         ...data,
         progress: data.isFinished ? book.page_count : data.progress,
-        isReading: data.isFinished ? false : data.isReading,
+        isReading: data.isFinished ? false : data.progress ? true : data.isReading,
       });
     }
   }
@@ -68,7 +68,7 @@ export function EditBookForm({ className, onSuccess, book }: Props) {
             {editBook.status === "executing" ? <Loader className="h-4 w-4 animate-spin" /> : <span>re-read</span>}
           </Button>
         ) : (
-          <div className={cn("flex flex-col gap-4", className)}>
+          <div className={cn("flex flex-col gap-8", className)}>
             <FormField
               control={form.control}
               name="progress"
@@ -113,7 +113,7 @@ export function EditBookForm({ className, onSuccess, book }: Props) {
           </div>
         )}
       </form>
-      <div className="flex justify-center">
+      <div className="flex justify-center pt-4">
         <DeleteBookButton bookId={book.id} onSuccess={onSuccess} />
       </div>
     </Form>

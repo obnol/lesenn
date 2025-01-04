@@ -21,7 +21,7 @@ export function BookItem({ book }: Props) {
   }
 
   const content = (
-    <div className="flex justify-between items-center hover:bg-gray-100 p-2 rounded-md select-none">
+    <div className="flex justify-between items-center hover:bg-gray-100 p-2 select-none">
       <div className="w-5/6">
         <p className="font-semibold">{book.title}</p>
         <p className="text-sm text-muted-foreground italic">{book.authors.join(", ")}</p>

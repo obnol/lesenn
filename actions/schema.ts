@@ -22,6 +22,8 @@ export type OnboardingSchemaFormValues = z.infer<typeof onboardingSchema>;
 export const addBookSchema = z.object({
   title: z.string(),
   isReading: z.boolean().optional(),
+  pageCount: z.number().optional(),
+  authors: z.array(z.string()).optional(),
 });
 
 export type AddBookSchemaFormValues = z.infer<typeof addBookSchema>;

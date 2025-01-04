@@ -1,8 +1,12 @@
 import Link from "next/link";
 
-export function GoBackButton() {
+type Props = {
+  href?: string;
+};
+
+export function GoBackButton({ href }: Props) {
   return (
-    <Link href="/" passHref>
+    <Link href={href || "/"} passHref>
       <p className="text-blue-600 hover:underline">← go back</p>
     </Link>
   );

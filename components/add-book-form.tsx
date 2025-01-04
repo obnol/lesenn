@@ -7,18 +7,19 @@ import { useAction } from "next-safe-action/hooks";
 import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "./ui/form";
 import { cn } from "@/lib/utils";
-import { Input } from "./ui/input";
 import { Checkbox } from "./ui/checkbox";
 import { Button } from "./ui/button";
 import { toast } from "sonner";
 import { Loader } from "lucide-react";
+import { GoogleBook } from "@/lib/types";
 
 type Props = {
   className?: string;
+  book: GoogleBook;
   onSuccess: () => void;
 };
 
-export function AddBookForm({ className, onSuccess }: Props) {
+export function AddBookForm({ book, className, onSuccess }: Props) {
   const addBook = useAction(addBookAction, {
     onError: () => {
       toast.error("something went wrong please try again");
@@ -33,8 +34,10 @@ export function AddBookForm({ className, onSuccess }: Props) {
   const form = useForm<AddBookSchemaFormValues>({
     resolver: zodResolver(addBookSchema),
     defaultValues: {
-      title: "",
+      title: book.volumeInfo.title.toLowerCase(),
       isReading: false,
+      authors: book?.volumeInfo?.authors?.map((author) => author.toLowerCase()),
+      pageCount: book.volumeInfo.pageCount,
     },
   });
 
@@ -44,18 +47,8 @@ export function AddBookForm({ className, onSuccess }: Props) {
 
   return (
     <Form {...form}>
+      <p className="font-semibold">{book.volumeInfo.title}</p>
       <form onSubmit={form.handleSubmit(onSubmit)} className={cn("flex flex-col gap-4", className)}>
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <Input placeholder="book title" {...field} />
-              </FormControl>
-            </FormItem>
-          )}
-        />
         <FormField
           control={form.control}
           name="isReading"
