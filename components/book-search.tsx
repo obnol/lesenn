@@ -80,8 +80,8 @@ export function BookSearch() {
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title} style={{ width: "36px", height: "auto" }} />
               )}
-              <div>
-                <strong>{book.volumeInfo.title}</strong>
+              <div className="flex flex-col overflow-hidden">
+                <p className="font-semibold text-ellipsis overflow-hidden whitespace-nowrap">{book.volumeInfo.title}</p>
                 {book.volumeInfo.authors && <p className="text-sm text-muted-foreground italic">{book.volumeInfo.authors.join(", ")}</p>}
               </div>
             </div>
