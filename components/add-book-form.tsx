@@ -47,8 +47,8 @@ export function AddBookForm({ book, className, onSuccess }: Props) {
 
   return (
     <Form {...form}>
-      <p className="font-semibold">{book.volumeInfo.title}</p>
       <form onSubmit={form.handleSubmit(onSubmit)} className={cn("flex flex-col gap-4", className)}>
+        <p className="font-semibold">{book.volumeInfo.title}</p>
         <FormField
           control={form.control}
           name="isReading"
