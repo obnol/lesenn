@@ -17,7 +17,8 @@ export type Database = {
           is_finished: boolean
           is_reading: boolean
           page_count: number
-          progress: number | null
+          progress: number
+          progress_type: Database["public"]["Enums"]["progress_type"]
           title: string
           user_id: string
         }
@@ -28,7 +29,8 @@ export type Database = {
           is_finished?: boolean
           is_reading?: boolean
           page_count: number
-          progress?: number | null
+          progress?: number
+          progress_type?: Database["public"]["Enums"]["progress_type"]
           title: string
           user_id?: string
         }
@@ -39,7 +41,8 @@ export type Database = {
           is_finished?: boolean
           is_reading?: boolean
           page_count?: number
-          progress?: number | null
+          progress?: number
+          progress_type?: Database["public"]["Enums"]["progress_type"]
           title?: string
           user_id?: string
         }
@@ -82,7 +85,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      progress_type: "page" | "percentage"
     }
     CompositeTypes: {
       [_ in never]: never

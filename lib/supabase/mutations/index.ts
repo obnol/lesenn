@@ -41,7 +41,7 @@ interface EditBookParams extends EditBookSchemaFormValues {
 export async function editBook(supabase: Client, data: EditBookParams) {
   await supabase
     .from("books")
-    .update({ is_reading: data.isReading, is_finished: data.isFinished, progress: data.progress })
+    .update({ is_reading: data.isReading, is_finished: data.isFinished, progress: data.progress, progress_type: data.progressType })
     .eq("id", data.bookId)
     .eq("user_id", data.userId);
 }

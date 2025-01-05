@@ -31,7 +31,11 @@ export function BookItem({ book }: Props) {
         {book.is_reading ? (
           <div className="flex items-center space-x-2">
             <Loader className="w-4 h-4" />
-            <span>{(((book.progress || 0) / book.page_count) * 100).toFixed(0)}%</span>
+            {book.progress_type === "page" ? (
+              <span>{(((book.progress || 0) / book.page_count) * 100).toFixed(0)}%</span>
+            ) : (
+              <span>{book.progress}%</span>
+            )}
           </div>
         ) : book.is_finished ? (
           <p>read</p>

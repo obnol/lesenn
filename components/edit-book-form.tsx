@@ -14,6 +14,7 @@ import { Loader } from "lucide-react";
 import { editBookAction } from "@/actions/edit-book.action";
 import { Book } from "@/lib/supabase/queries";
 import { DeleteBookButton } from "./delete-book-button";
+import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group";
 
 type Props = {
   className?: string;
@@ -40,8 +41,11 @@ export function EditBookForm({ className, onSuccess, book }: Props) {
       isFinished: book.is_finished,
       progress: book.progress || 0,
       bookId: book.id,
+      progressType: book.progress_type,
     },
   });
+
+  const progressTypeWatch = form.watch("progressType");
 
   function onSubmit(data: EditBookSchemaFormValues) {
     if (book.is_finished) {
@@ -68,15 +72,39 @@ export function EditBookForm({ className, onSuccess, book }: Props) {
             {editBook.status === "executing" ? <Loader className="h-4 w-4 animate-spin" /> : <span>re-read</span>}
           </Button>
         ) : (
-          <div className={cn("flex flex-col gap-8", className)}>
+          <div className={cn("flex flex-col gap-4", className)}>
+            <FormField
+              control={form.control}
+              name="progressType"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>how you are tracking you progress?</FormLabel>
+                  <FormControl>
+                    <ToggleGroup type="single" value={field.value} onValueChange={field.onChange}>
+                      <ToggleGroupItem value="page" aria-label="Toggle bold">
+                        <p>page</p>
+                      </ToggleGroupItem>
+                      <ToggleGroupItem value="percentage" aria-label="Toggle italic">
+                        <p>percentage</p>
+                      </ToggleGroupItem>
+                    </ToggleGroup>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="progress"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>page</FormLabel>
+                  <FormLabel>{progressTypeWatch === "page" ? "page" : "percentage"}</FormLabel>
                   <FormControl>
-                    <Input type="number" {...field} onChange={(e) => field.onChange(parseFloat(e.target.value))} max={book.page_count} />
+                    <Input
+                      type="number"
+                      {...field}
+                      onChange={(e) => field.onChange(parseFloat(e.target.value))}
+                      max={progressTypeWatch === "page" ? book.page_count : 100}
+                    />
                   </FormControl>
                 </FormItem>
               )}
