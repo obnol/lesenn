@@ -78,7 +78,7 @@ export function EditBookForm({ className, onSuccess, book }: Props) {
               name="progressType"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>how you are tracking you progress?</FormLabel>
+                  <FormLabel>how are you tracking your progress?</FormLabel>
                   <FormControl>
                     <ToggleGroup type="single" value={field.value} onValueChange={field.onChange}>
                       <ToggleGroupItem value="page" aria-label="Toggle bold">
