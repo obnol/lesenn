@@ -38,15 +38,11 @@ export const viewport = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <Script src="https://www.googletagmanager.com/gtag/js?id=G-RKGM0H4TD9" strategy="afterInteractive" />
-      <Script id="google-analytics">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-RKGM0H4TD9');
-          `}
-      </Script>
+      <Script
+        src="https://cdn.seline.so/seline.js"
+        data-token="c1ce0ee3190c90a" // can be found at General settings
+        strategy="afterInteractive"
+      />
       <body className={`${geistMono.className} antialiased`}>
         <div className="flex flex-col min-h-screen p-6 md:pt-12">
           <main className="max-w-2xl mx-auto w-full space-y-8">{children}</main>
