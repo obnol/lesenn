@@ -21,3 +21,10 @@ export async function getUserLibraryQuery(supabase: Client, userId: string) {
     .order("created_at", { ascending: false })
     .order("is_finished", { ascending: false });
 }
+
+/**
+ * Get user's streaks
+ */
+export async function getUserStreaksQuery(supabase: Client, userId: string) {
+  return supabase.from("streak").select("*").eq("user_id", userId).single();
+}

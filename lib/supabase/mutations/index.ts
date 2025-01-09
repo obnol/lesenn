@@ -49,3 +49,35 @@ export async function editBook(supabase: Client, data: EditBookParams) {
 export async function deleteBook(supabase: Client, data: DeleteBookSchemaFormValues) {
   await supabase.from("books").delete().eq("id", data.bookId);
 }
+
+type UpdateStreakParams = {
+  userId: string;
+};
+
+export async function updateStreak(supabase: Client, data: UpdateStreakParams) {
+  const streak = await supabase.from("streak").select("*").eq("user_id", data.userId).single();
+
+  if (!streak.data) {
+    await supabase.from("streak").insert({ user_id: data.userId, days: 1, updated_at: new Date().toISOString() });
+    return;
+  }
+
+  // Check if the streak was last updated today
+  const lastUpdated = new Date(streak.data.updated_at);
+  const today = new Date();
+  const isUpdatedToday =
+    lastUpdated.getDate() === today.getDate() &&
+    lastUpdated.getMonth() === today.getMonth() &&
+    lastUpdated.getFullYear() === today.getFullYear();
+
+  // If not updated today, increment the streak and update the timestamp
+  if (!isUpdatedToday) {
+    await supabase
+      .from("streak")
+      .update({
+        days: streak.data.days! + 1,
+        updated_at: today.toISOString(),
+      })
+      .eq("user_id", data.userId);
+  }
+}

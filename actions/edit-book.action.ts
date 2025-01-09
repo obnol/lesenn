@@ -1,6 +1,6 @@
 "use server";
 
-import { editBook } from "@/lib/supabase/mutations";
+import { editBook, updateStreak } from "@/lib/supabase/mutations";
 import { authActionClient } from "./safe-action";
 import { editBookSchema } from "./schema";
 import { revalidateTag } from "next/cache";
@@ -11,5 +11,8 @@ export const editBookAction = authActionClient
   .action(async ({ parsedInput, ctx: { supabase, user } }) => {
     await editBook(supabase, { ...parsedInput, userId: user.id });
 
+    await updateStreak(supabase, { userId: user.id });
+
     revalidateTag(`user-library-${user.id}`);
+    revalidateTag(`user-streaks-${user.id}`);
   });

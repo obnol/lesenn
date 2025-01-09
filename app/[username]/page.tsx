@@ -1,4 +1,5 @@
 import { BookList } from "@/components/book-list";
+import { StreakCount } from "@/components/streak-count";
 import { getUserLibrary } from "@/lib/supabase/queries/cached-queries";
 import Link from "next/link";
 
@@ -22,7 +23,9 @@ export default async function Page({ params }: Props) {
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="flex justify-end">
+      <div className="flex justify-between">
+        <StreakCount />
+
         <Link href={`/${username}/new`} className="text-blue-500">
           add book
         </Link>
