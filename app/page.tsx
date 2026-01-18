@@ -1,6 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Track your reading progress without distractions",
+  description: "Lesenn is a minimalist reading tracker that helps you track your reading progress without distractions. Focus on reading, not managing complex features.",
+};
 
 export default function Page() {
   return (
@@ -19,7 +25,7 @@ export default function Page() {
         <section className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 text-center">
           <div className="space-y-6">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight">
-              read. track. repeat.
+              Track your reading progress without distractions
             </h1>
 
             <div className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto space-y-3">

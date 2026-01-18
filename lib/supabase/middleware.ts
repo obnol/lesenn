@@ -31,7 +31,16 @@ export async function updateSession(request: NextRequest) {
   const isLandingPage = pathname === "/";
   const isLoginPage = pathname.startsWith("/login");
   const isOnboardingPage = pathname.startsWith("/onboarding");
-  const isDynamicUserRoute = /^\/[^/]+(\/.*)?$/.test(pathname) && !isLandingPage && !isLoginPage && !isOnboardingPage;
+  
+  // Public SEO pages that should not be treated as username routes
+  const publicPages = [
+    "/reading-tracker",
+    "/track-reading-progress",
+    "/book-tracking-app",
+  ];
+  const isPublicPage = publicPages.some(page => pathname.startsWith(page));
+  
+  const isDynamicUserRoute = /^\/[^/]+(\/.*)?$/.test(pathname) && !isLandingPage && !isLoginPage && !isOnboardingPage && !isPublicPage;
 
   // Redirect unauthorized users trying to access protected routes to `/`
   if (!user && (isDynamicUserRoute || isOnboardingPage)) {
