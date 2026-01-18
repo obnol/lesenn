@@ -13,36 +13,48 @@ export type Database = {
         Row: {
           authors: string[]
           created_at: string
+          finished_date: string | null
           id: string
+          image_url: string | null
           is_finished: boolean
           is_reading: boolean
+          notes: string | null
           page_count: number
           progress: number
           progress_type: Database["public"]["Enums"]["progress_type"]
+          started_date: string | null
           title: string
           user_id: string
         }
         Insert: {
           authors: string[]
           created_at?: string
+          finished_date?: string | null
           id?: string
+          image_url?: string | null
           is_finished?: boolean
           is_reading?: boolean
+          notes?: string | null
           page_count: number
           progress?: number
           progress_type?: Database["public"]["Enums"]["progress_type"]
+          started_date?: string | null
           title: string
           user_id?: string
         }
         Update: {
           authors?: string[]
           created_at?: string
+          finished_date?: string | null
           id?: string
+          image_url?: string | null
           is_finished?: boolean
           is_reading?: boolean
+          notes?: string | null
           page_count?: number
           progress?: number
           progress_type?: Database["public"]["Enums"]["progress_type"]
+          started_date?: string | null
           title?: string
           user_id?: string
         }

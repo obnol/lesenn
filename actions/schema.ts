@@ -24,6 +24,7 @@ export const addBookSchema = z.object({
   isReading: z.boolean().optional(),
   pageCount: z.number().optional(),
   authors: z.array(z.string()).optional(),
+  imageUrl: z.string().optional(),
 });
 
 export type AddBookSchemaFormValues = z.infer<typeof addBookSchema>;
@@ -34,6 +35,7 @@ export const editBookSchema = z.object({
   isFinished: z.boolean().optional(),
   progress: z.number().optional(),
   progressType: z.enum(["page", "percentage"]).optional(),
+  notes: z.string().optional(),
 });
 
 export type EditBookSchemaFormValues = z.infer<typeof editBookSchema>;

@@ -38,6 +38,7 @@ export function AddBookForm({ book, className, onSuccess }: Props) {
       isReading: false,
       authors: book?.volumeInfo?.authors?.map((author) => author.toLowerCase()),
       pageCount: book.volumeInfo.pageCount,
+      imageUrl: book.volumeInfo.imageLinks?.thumbnail,
     },
   });
 
@@ -48,7 +49,27 @@ export function AddBookForm({ book, className, onSuccess }: Props) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className={cn("flex flex-col gap-4", className)}>
-        <p className="font-semibold">{book.volumeInfo.title}</p>
+        <div className="flex gap-4 items-start">
+          {book.volumeInfo.imageLinks?.thumbnail && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={book.volumeInfo.imageLinks.thumbnail}
+              alt={book.volumeInfo.title}
+              className="w-20 h-auto flex-shrink-0 object-cover rounded"
+              style={{ maxHeight: "120px" }}
+            />
+          )}
+          <div className="flex-1 min-w-0">
+            <p className="font-semibold mb-1">{book.volumeInfo.title}</p>
+            {book.volumeInfo.authors && (
+              <p className="text-sm text-muted-foreground italic mb-1">{book.volumeInfo.authors.join(", ")}</p>
+            )}
+            {book.volumeInfo.pageCount && (
+              <p className="text-xs text-muted-foreground">{book.volumeInfo.pageCount} pages</p>
+            )}
+          </div>
+        </div>
+
         <FormField
           control={form.control}
           name="isReading"
@@ -63,7 +84,7 @@ export function AddBookForm({ book, className, onSuccess }: Props) {
         />
 
         <Button type="submit" className="w-full" disabled={addBook.status === "executing"}>
-          {addBook.status === "executing" ? <Loader className="h-4 w-4 animate-spin" /> : <span>save</span>}
+          {addBook.status === "executing" ? <Loader className="h-4 w-4 animate-spin" /> : <span>add to library</span>}
         </Button>
       </form>
     </Form>

@@ -4,6 +4,7 @@ import {
   EditBookSchemaFormValues,
   OnboardingSchemaFormValues,
 } from "@/actions/schema";
+import { getDaysDifference } from "@/lib/date-utils";
 import { Client } from "../types";
 
 export async function updateUser(supabase: Client, data: OnboardingSchemaFormValues) {
@@ -31,6 +32,7 @@ export async function addBook(supabase: Client, data: AddBookParams) {
     page_count: data.pageCount,
     is_reading: data.isReading,
     user_id: data.userId,
+    image_url: data.imageUrl,
   });
 }
 
@@ -39,11 +41,35 @@ interface EditBookParams extends EditBookSchemaFormValues {
 }
 
 export async function editBook(supabase: Client, data: EditBookParams) {
-  await supabase
+  // Get current book state to track date changes
+  const { data: currentBook } = await supabase
     .from("books")
-    .update({ is_reading: data.isReading, is_finished: data.isFinished, progress: data.progress, progress_type: data.progressType })
+    .select("is_reading, is_finished, started_date, finished_date")
     .eq("id", data.bookId)
-    .eq("user_id", data.userId);
+    .single();
+
+  const now = new Date().toISOString();
+  const updateData: Record<string, unknown> = {
+    is_reading: data.isReading,
+    is_finished: data.isFinished,
+    progress: data.progress,
+    progress_type: data.progressType,
+    notes: data.notes,
+  };
+
+  // Set started_date when starting to read for the first time
+  if (data.isReading && !currentBook?.started_date) {
+    updateData.started_date = now;
+  }
+
+  // Set finished_date when finishing, clear it when un-finishing
+  if (data.isFinished && !currentBook?.finished_date) {
+    updateData.finished_date = now;
+  } else if (!data.isFinished && currentBook?.finished_date) {
+    updateData.finished_date = null;
+  }
+
+  await supabase.from("books").update(updateData).eq("id", data.bookId).eq("user_id", data.userId);
 }
 
 export async function deleteBook(supabase: Client, data: DeleteBookSchemaFormValues) {
@@ -57,27 +83,40 @@ type UpdateStreakParams = {
 export async function updateStreak(supabase: Client, data: UpdateStreakParams) {
   const streak = await supabase.from("streak").select("*").eq("user_id", data.userId).single();
 
+  const now = new Date();
+
+  // If no streak exists, create one with 1 day
   if (!streak.data) {
-    await supabase.from("streak").insert({ user_id: data.userId, days: 1, updated_at: new Date().toISOString() });
+    await supabase.from("streak").insert({ user_id: data.userId, days: 1, updated_at: now.toISOString() });
     return;
   }
 
-  // Check if the streak was last updated today
   const lastUpdated = new Date(streak.data.updated_at);
-  const today = new Date();
-  const isUpdatedToday =
-    lastUpdated.getDate() === today.getDate() &&
-    lastUpdated.getMonth() === today.getMonth() &&
-    lastUpdated.getFullYear() === today.getFullYear();
+  const daysDifference = getDaysDifference(now, lastUpdated);
 
-  // If not updated today, increment the streak and update the timestamp
-  if (!isUpdatedToday) {
+  // If already updated today, do nothing
+  if (daysDifference === 0) {
+    return;
+  }
+
+  // If last updated was yesterday, increment the streak
+  if (daysDifference === 1) {
     await supabase
       .from("streak")
       .update({
-        days: streak.data.days! + 1,
-        updated_at: today.toISOString(),
+        days: (streak.data.days || 0) + 1,
+        updated_at: now.toISOString(),
       })
       .eq("user_id", data.userId);
+    return;
   }
+
+  // If more than 1 day has passed, reset the streak to 1
+  await supabase
+    .from("streak")
+    .update({
+      days: 1,
+      updated_at: now.toISOString(),
+    })
+    .eq("user_id", data.userId);
 }

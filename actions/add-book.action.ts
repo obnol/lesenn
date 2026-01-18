@@ -9,13 +9,14 @@ import { redirect } from "next/navigation";
 export const addBookAction = authActionClient
   .schema(addBookSchema)
   .metadata({ name: "add-book" })
-  .action(async ({ parsedInput: { title, authors, isReading, pageCount }, ctx: { supabase, user } }) => {
+  .action(async ({ parsedInput: { title, authors, isReading, pageCount, imageUrl }, ctx: { supabase, user } }) => {
     await addBook(supabase, {
       title,
       isReading,
       authors: authors || [],
       userId: user.id,
       pageCount: pageCount || 0,
+      imageUrl,
     });
 
     revalidateTag(`user-library-${user.id}`);

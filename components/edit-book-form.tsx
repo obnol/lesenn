@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "./ui/form";
 import { cn } from "@/lib/utils";
 import { Input } from "./ui/input";
+import { Textarea } from "./ui/textarea";
 import { Checkbox } from "./ui/checkbox";
 import { Button } from "./ui/button";
 import { toast } from "sonner";
@@ -42,6 +43,7 @@ export function EditBookForm({ className, onSuccess, book }: Props) {
       progress: book.progress || 0,
       bookId: book.id,
       progressType: book.progress_type,
+      notes: book.notes || "",
     },
   });
 
@@ -54,6 +56,7 @@ export function EditBookForm({ className, onSuccess, book }: Props) {
         isReading: true,
         isFinished: false,
         bookId: book.id,
+        notes: data.notes,
       });
     } else {
       editBook.execute({
@@ -131,6 +134,24 @@ export function EditBookForm({ className, onSuccess, book }: Props) {
                     <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                   </FormControl>
                   <FormLabel>mark as finished</FormLabel>
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="notes"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>notes</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="add your thoughts, quotes, or notes about this book..."
+                      className="resize-none"
+                      rows={4}
+                      {...field}
+                    />
+                  </FormControl>
                 </FormItem>
               )}
             />
