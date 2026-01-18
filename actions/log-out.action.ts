@@ -12,7 +12,9 @@ export async function logOutAction() {
 
   await supabase.auth.signOut();
 
-  revalidateTag(`user_${user?.data?.id}`);
+  if (user?.data?.id) {
+    revalidateTag(`user_${user.data.id}`, "max");
+  }
 
   return redirect("/");
 }

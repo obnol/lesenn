@@ -18,7 +18,7 @@ export const onboardingAction = authActionClient
 
     await Promise.all([supabase.auth.updateUser({ data: { username } }), updateUser(supabase, { username })]);
 
-    revalidateTag(`user_${user.id}`);
+    revalidateTag(`user_${user.id}`, "max");
 
     redirect("/");
   });

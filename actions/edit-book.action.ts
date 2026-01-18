@@ -13,6 +13,6 @@ export const editBookAction = authActionClient
 
     await updateStreak(supabase, { userId: user.id });
 
-    revalidateTag(`user-library-${user.id}`);
-    revalidateTag(`user-streaks-${user.id}`);
+    revalidateTag(`user-library-${user.id}`, "max");
+    revalidateTag(`user-streaks-${user.id}`, "max");
   });

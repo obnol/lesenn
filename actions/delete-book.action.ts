@@ -11,5 +11,5 @@ export const deleteBookAction = authActionClient
   .action(async ({ parsedInput, ctx: { supabase, user } }) => {
     await deleteBook(supabase, parsedInput);
 
-    revalidateTag(`user-library-${user.id}`);
+    await revalidateTag(`user-library-${user.id}`, "max");
   });

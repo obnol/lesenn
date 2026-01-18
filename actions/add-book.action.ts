@@ -19,7 +19,7 @@ export const addBookAction = authActionClient
       imageUrl,
     });
 
-    revalidateTag(`user-library-${user.id}`);
+    revalidateTag(`user-library-${user.id}`, "max");
 
     redirect(`/${user.username}`);
   });
