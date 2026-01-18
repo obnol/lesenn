@@ -48,21 +48,21 @@ export function AddBookForm({ book, className, onSuccess }: Props) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className={cn("flex flex-col gap-4", className)}>
-        <div className="flex gap-4 items-start">
+      <form onSubmit={form.handleSubmit(onSubmit)} className={cn("flex flex-col gap-3 sm:gap-4", className)}>
+        <div className="flex gap-3 sm:gap-4 items-start">
           {book.volumeInfo.imageLinks?.thumbnail && (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={book.volumeInfo.imageLinks.thumbnail}
               alt={book.volumeInfo.title}
-              className="w-20 h-auto flex-shrink-0 object-cover rounded"
-              style={{ maxHeight: "120px" }}
+              className="w-16 sm:w-20 h-auto flex-shrink-0 object-cover rounded"
+              style={{ maxHeight: "96px" }}
             />
           )}
           <div className="flex-1 min-w-0">
-            <p className="font-semibold mb-1">{book.volumeInfo.title}</p>
+            <p className="font-semibold mb-0.5 sm:mb-1 text-sm sm:text-base">{book.volumeInfo.title}</p>
             {book.volumeInfo.authors && (
-              <p className="text-sm text-muted-foreground italic mb-1">{book.volumeInfo.authors.join(", ")}</p>
+              <p className="text-xs sm:text-sm text-muted-foreground italic mb-0.5 sm:mb-1">{book.volumeInfo.authors.join(", ")}</p>
             )}
             {book.volumeInfo.pageCount && (
               <p className="text-xs text-muted-foreground">{book.volumeInfo.pageCount} pages</p>
@@ -74,11 +74,11 @@ export function AddBookForm({ book, className, onSuccess }: Props) {
           control={form.control}
           name="isReading"
           render={({ field }) => (
-            <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+            <FormItem className="flex flex-row items-start space-x-2 sm:space-x-3 space-y-0">
               <FormControl>
                 <Checkbox checked={field.value} onCheckedChange={field.onChange} />
               </FormControl>
-              <FormLabel>currently reading</FormLabel>
+              <FormLabel className="text-sm">currently reading</FormLabel>
             </FormItem>
           )}
         />

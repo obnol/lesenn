@@ -18,7 +18,7 @@ export type Database = {
           image_url: string | null
           is_finished: boolean
           is_reading: boolean
-          notes: string | null
+          rating: number | null
           page_count: number
           progress: number
           progress_type: Database["public"]["Enums"]["progress_type"]
@@ -34,7 +34,7 @@ export type Database = {
           image_url?: string | null
           is_finished?: boolean
           is_reading?: boolean
-          notes?: string | null
+          rating?: number | null
           page_count: number
           progress?: number
           progress_type?: Database["public"]["Enums"]["progress_type"]
@@ -50,7 +50,7 @@ export type Database = {
           image_url?: string | null
           is_finished?: boolean
           is_reading?: boolean
-          notes?: string | null
+          rating?: number | null
           page_count?: number
           progress?: number
           progress_type?: Database["public"]["Enums"]["progress_type"]

@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "./ui/form";
 import { cn } from "@/lib/utils";
 import { Input } from "./ui/input";
-import { Textarea } from "./ui/textarea";
 import { Checkbox } from "./ui/checkbox";
 import { Button } from "./ui/button";
 import { toast } from "sonner";
@@ -16,6 +15,7 @@ import { editBookAction } from "@/actions/edit-book.action";
 import { Book } from "@/lib/supabase/queries";
 import { DeleteBookButton } from "./delete-book-button";
 import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group";
+import { StarRating } from "./ui/star-rating";
 
 type Props = {
   className?: string;
@@ -43,7 +43,7 @@ export function EditBookForm({ className, onSuccess, book }: Props) {
       progress: book.progress || 0,
       bookId: book.id,
       progressType: book.progress_type,
-      notes: book.notes || "",
+      rating: book.rating || undefined,
     },
   });
 
@@ -56,7 +56,7 @@ export function EditBookForm({ className, onSuccess, book }: Props) {
         isReading: true,
         isFinished: false,
         bookId: book.id,
-        notes: data.notes,
+        rating: data.rating,
       });
     } else {
       editBook.execute({
@@ -140,17 +140,12 @@ export function EditBookForm({ className, onSuccess, book }: Props) {
 
             <FormField
               control={form.control}
-              name="notes"
+              name="rating"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>notes</FormLabel>
+                  <FormLabel>rating</FormLabel>
                   <FormControl>
-                    <Textarea
-                      placeholder="add your thoughts, quotes, or notes about this book..."
-                      className="resize-none"
-                      rows={4}
-                      {...field}
-                    />
+                    <StarRating value={field.value} onChange={field.onChange} />
                   </FormControl>
                 </FormItem>
               )}

@@ -35,7 +35,7 @@ export const editBookSchema = z.object({
   isFinished: z.boolean().optional(),
   progress: z.number().optional(),
   progressType: z.enum(["page", "percentage"]).optional(),
-  notes: z.string().optional(),
+  rating: z.number().min(1).max(5).optional(),
 });
 
 export type EditBookSchemaFormValues = z.infer<typeof editBookSchema>;

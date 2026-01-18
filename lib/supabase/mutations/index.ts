@@ -54,7 +54,7 @@ export async function editBook(supabase: Client, data: EditBookParams) {
     is_finished: data.isFinished,
     progress: data.progress,
     progress_type: data.progressType,
-    notes: data.notes,
+    rating: data.rating,
   };
 
   // Set started_date when starting to read for the first time

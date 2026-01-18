@@ -4,6 +4,10 @@ import { useState, useMemo, useEffect } from "react";
 import { Input } from "./ui/input";
 import { Book } from "@/lib/supabase/queries";
 import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group";
+import { useMediaQuery } from "@/lib/hooks/use-media-query";
+import { Button } from "./ui/button";
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "./ui/drawer";
+import { Filter } from "lucide-react";
 
 type FilterStatus = "all" | "reading" | "finished" | "want-to-read";
 type SortOption = "date-added-desc" | "date-added-asc" | "title-asc" | "title-desc" | "status";
@@ -17,6 +21,8 @@ export function LibraryControls({ books, onFilteredBooksChange }: Props) {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterStatus, setFilterStatus] = useState<FilterStatus>("all");
   const [sortOption, setSortOption] = useState<SortOption>("date-added-desc");
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   const filteredAndSortedBooks = useMemo(() => {
     let filtered = [...books];
@@ -71,61 +77,90 @@ export function LibraryControls({ books, onFilteredBooksChange }: Props) {
     onFilteredBooksChange(filteredAndSortedBooks);
   }, [filteredAndSortedBooks, onFilteredBooksChange]);
 
-  return (
-    <div className="flex flex-col gap-2">
-      {/* Search */}
-      <Input
-        placeholder="search..."
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        className="h-9"
-      />
-
-      {/* Filter and Sort - Compact horizontal layout */}
+  const filterAndSortContent = (
+    <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-2">
+        <p className="text-sm font-medium">filter</p>
         <ToggleGroup
           type="single"
           value={filterStatus}
           onValueChange={(value) => setFilterStatus((value || "all") as FilterStatus)}
           className="justify-start flex-wrap"
         >
-          <ToggleGroupItem value="all" aria-label="All books" className="text-xs px-2 py-1">
+          <ToggleGroupItem value="all" aria-label="All books" className="text-xs px-3 py-1.5">
             all
           </ToggleGroupItem>
-          <ToggleGroupItem value="reading" aria-label="Reading" className="text-xs px-2 py-1">
+          <ToggleGroupItem value="reading" aria-label="Reading" className="text-xs px-3 py-1.5">
             reading
           </ToggleGroupItem>
-          <ToggleGroupItem value="finished" aria-label="Finished" className="text-xs px-2 py-1">
+          <ToggleGroupItem value="finished" aria-label="Finished" className="text-xs px-3 py-1.5">
             finished
           </ToggleGroupItem>
-          <ToggleGroupItem value="want-to-read" aria-label="Want to read" className="text-xs px-2 py-1">
+          <ToggleGroupItem value="want-to-read" aria-label="Want to read" className="text-xs px-3 py-1.5">
             want to read
           </ToggleGroupItem>
         </ToggleGroup>
+      </div>
 
+      <div className="flex flex-col gap-2">
+        <p className="text-sm font-medium">sort</p>
         <ToggleGroup
           type="single"
           value={sortOption}
           onValueChange={(value) => setSortOption((value || "date-added-desc") as SortOption)}
           className="justify-start flex-wrap"
         >
-          <ToggleGroupItem value="date-added-desc" aria-label="Newest first" className="text-xs px-2 py-1">
+          <ToggleGroupItem value="date-added-desc" aria-label="Newest first" className="text-xs px-3 py-1.5">
             newest
           </ToggleGroupItem>
-          <ToggleGroupItem value="date-added-asc" aria-label="Oldest first" className="text-xs px-2 py-1">
+          <ToggleGroupItem value="date-added-asc" aria-label="Oldest first" className="text-xs px-3 py-1.5">
             oldest
           </ToggleGroupItem>
-          <ToggleGroupItem value="title-asc" aria-label="Title A-Z" className="text-xs px-2 py-1">
+          <ToggleGroupItem value="title-asc" aria-label="Title A-Z" className="text-xs px-3 py-1.5">
             a-z
           </ToggleGroupItem>
-          <ToggleGroupItem value="title-desc" aria-label="Title Z-A" className="text-xs px-2 py-1">
+          <ToggleGroupItem value="title-desc" aria-label="Title Z-A" className="text-xs px-3 py-1.5">
             z-a
           </ToggleGroupItem>
-          <ToggleGroupItem value="status" aria-label="By status" className="text-xs px-2 py-1">
+          <ToggleGroupItem value="status" aria-label="By status" className="text-xs px-3 py-1.5">
             status
           </ToggleGroupItem>
         </ToggleGroup>
       </div>
+    </div>
+  );
+
+  return (
+    <div className="flex flex-col gap-2">
+      {/* Search */}
+      <div className="flex gap-2">
+        <Input
+          placeholder="search..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="h-9 flex-1"
+        />
+        {!isDesktop && (
+          <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
+            <DrawerTrigger asChild>
+              <Button variant="outline" size="sm" className="h-9 px-3">
+                <Filter className="h-4 w-4" />
+              </Button>
+            </DrawerTrigger>
+            <DrawerContent>
+              <DrawerHeader>
+                <DrawerTitle>filter & sort</DrawerTitle>
+              </DrawerHeader>
+              <div className="p-4 pb-6" style={{ paddingBottom: `calc(1.5rem + env(safe-area-inset-bottom))` }}>
+                {filterAndSortContent}
+              </div>
+            </DrawerContent>
+          </Drawer>
+        )}
+      </div>
+
+      {/* Filter and Sort - Only visible on desktop */}
+      {isDesktop && filterAndSortContent}
     </div>
   );
 }
