@@ -16,11 +16,24 @@ export async function updateSession(request: NextRequest) {
         supabaseResponse = NextResponse.next({
           request,
         });
-        cookiesToSet.forEach(({ name, value, options }) => supabaseResponse.cookies.set(name, value, options));
+        cookiesToSet.forEach(({ name, value, options }) => {
+          // Enhance cookie options for better persistence
+          const enhancedOptions = {
+            ...options,
+            // Set maxAge to 30 days for auth cookies (Supabase refresh tokens last longer)
+            maxAge: name.includes('auth-token') ? 60 * 60 * 24 * 30 : options?.maxAge,
+            sameSite: 'lax' as const,
+            secure: process.env.NODE_ENV === 'production',
+            httpOnly: true,
+            path: '/',
+          };
+          supabaseResponse.cookies.set(name, value, enhancedOptions);
+        });
       },
     },
   });
 
+  // This will automatically refresh the session if needed
   const {
     data: { user },
   } = await supabase.auth.getUser();

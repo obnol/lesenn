@@ -10,7 +10,7 @@ export function normalizeDateToDay(date: Date): Date {
 }
 
 /**
- * Calculates the difference in days between two dates
+ * Calculates the difference in days between two dates (calendar days)
  */
 export function getDaysDifference(date1: Date, date2: Date): number {
   const normalized1 = normalizeDateToDay(date1);
@@ -20,13 +20,16 @@ export function getDaysDifference(date1: Date, date2: Date): number {
 }
 
 /**
- * Checks if a streak is still active (updated today or yesterday)
+ * Checks if a streak is still active (updated today)
+ * A streak is active only if it was updated today (0 days ago)
+ * If it was updated yesterday (1 day ago) or earlier, the streak is inactive
  */
 export function isStreakActive(updatedAt: string): boolean {
   const lastUpdated = new Date(updatedAt);
   const now = new Date();
   const daysDifference = getDaysDifference(now, lastUpdated);
   
-  // Streak is active if updated today (0 days) or yesterday (1 day)
-  return daysDifference <= 1;
+  // Streak is active only if updated today (0 days difference)
+  // If 1+ days have passed, the streak is inactive/broken
+  return daysDifference === 0;
 }
